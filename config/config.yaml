@@ -4,10 +4,10 @@ server :
     address : localhost:8080
 
 db:
-    address:     185.159.153.22
-    user:        joe
+    address:     localhost
+    user:        dumyuser
     dbname :     orders
-    password:   U_Xz$M,(3${gpTcZ
+    password:   dumypassword
     port:       3306
 
 logpath: /tmp/log

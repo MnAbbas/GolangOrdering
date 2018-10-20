@@ -7,7 +7,7 @@
 # default username if exists
 username="root"
 # default password if exists
-password="mydumypass"
+password="123456"
 # crete dumy user for demo
 dumyuser="dumyuser"
 # crete dumy password for demo
@@ -25,7 +25,7 @@ install_mysql () {
     # Install MySQL
     # Install the MySQL server by using the Ubuntu package manager:
     sudo apt-get update
-    sudo apt-get install mysql-server
+    sudo apt-get -y install mysql-server
     # Allow remote access
     # Run the following command to allow remote access to the mysql server:
     sudo ufw allow mysql
@@ -50,41 +50,9 @@ run_script () {
     echo
 
     # Set the root password
-    execsql=$(printf "UPDATE mysql.user SET authentication_string = PASSWORD(%s) WHERE User =%s" $password $username)
-    mysql -u root -p --execute=$execsql
+    execsql="UPDATE mysql.user SET authentication_string = PASSWORD('123456') WHERE User ='root'" 
+    mysql -u root -p'123456' -s < mysqlscript.sql
     echo "User root Updated!"
-    date
-    echo
-
-    # Create orders database    
-    mysql -u root -p$password --execute="CREATE DATABASE orders "
-    echo "Creating Database!!"
-    date
-    echo
-
-    # Add a database user named demouser with pass demopassword
-    execsql=$(printf "INSERT INTO mysql.user (User,Host,authentication_string,ssl_cipher,x509_issuer,x509_subject) VALUES(%s,'localhost',PASSWORD(%s),'','','')" $username $password )
-    mysql -u root -p$password --execute=$execsql
-    echo "create user!!!"
-    date
-    echo
-
-    # Grant database user permissions
-    execsql=$(printf "GRANT ALL PRIVILEGES ON orders.* to %s@localhost;" $username)
-    mysql -u root -p$password --execute=$execsql
-    echo "Grant Privilages!"
-    date
-    echo
-
-    # to apply changes on privilges
-    mysql -u root -p$password --execute="FLUSH PRIVILEGES;"
-    echo "Grant Privilages!"
-    date
-    echo
-
-    # Create orderinfo table
-    mysql -u root -p$password --execute="use orders ; CREATE TABLE orderinfo (iOrderId int(11) NOT NULL AUTO_INCREMENT,iDistance int(11) DEFAULT NULL, vStatus varchar(45) , dtOrder datetime DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (iOrderId)) ENGINE=InnoDB AUTO_INCREMENT=0;"
-    echo "Everything DOne! , ready to go "
     date
     echo
 }
@@ -93,6 +61,7 @@ runapplication (){
     echo "Esecute the application , go everythere with Golang "
     date
     echo
+    ./mydemoapp
 }
 
 # Check the status of installation mysql on Server
@@ -103,3 +72,4 @@ if [ $mysqlpkg -eq 0 ] ; then
 else
     run_script
 fi
+runapplication

@@ -21,10 +21,10 @@ type Config struct {
 	}
 
 	DB struct {
-		Address  string `default:"185.159.153.22"`
-		User     string `default:"karnik"`
+		Address  string `default:"localhost"`
+		User     string `default:"dumyuser"`
 		Dbname   string `default:"orders"`
-		Password string `required:"true" default:"123456"`
+		Password string `required:"true" default:"dumypassword"`
 		Port     string `default:"3306"`
 	}
 
