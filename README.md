@@ -6,7 +6,7 @@ I did my best to keep it simple , clean and structured
 this project is built based on mvc models 
 
 # Technology
-I using [Golang](https://golang.org)  , [gorilla](http://www.gorillatoolkit.org) , [mysql](https://www.mysql.com) in this project
+I used [Golang](https://golang.org)  , [gorilla](http://www.gorillatoolkit.org) , [mysql](https://www.mysql.com) in this project
 
 # Settup
 ``` ./bash.sh ``` 
