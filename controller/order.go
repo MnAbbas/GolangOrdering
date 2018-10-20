@@ -8,8 +8,10 @@ package controller
 import (
 	"GolangOrdering/helpers"
 	"GolangOrdering/models"
+	"encoding/json"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/gorilla/mux"
 )
@@ -44,28 +46,34 @@ func (a *App) getOrders(w http.ResponseWriter, r *http.Request) {
 // it must use google api to find out distance between two points
 // provided point must be well formated other wise it won't show right answer
 func (a *App) createOrder(w http.ResponseWriter, r *http.Request) {
-	origin := r.FormValue("origin")
+	decoder := json.NewDecoder(r.Body)
+	var trequest map[string][]string
+	err := decoder.Decode(&trequest)
+	if err != nil {
+		helpers.RespondWithError(w, http.StatusBadRequest, "INVALID_BODY")
+		return
+	}
+	origin := trequest["origin"]
 	if len(origin) == 0 {
 		helpers.RespondWithError(w, http.StatusBadRequest, "INVALID_ORIGIN")
 		return
 	}
 
-	destination := r.FormValue("destination")
+	destination := trequest["destination"]
 	if len(destination) == 0 {
 		helpers.RespondWithError(w, http.StatusBadRequest, "INVALID_DESTINATION")
 		return
 	}
-
-	distance, err := helpers.CalcDistance(origin, destination)
+	distance, err := helpers.CalcDistance(strings.Join(origin, ","), strings.Join(destination, ","))
 	if err != nil {
 		helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
+
 	if distance == 0 {
 		helpers.RespondWithError(w, http.StatusBadRequest, "PROVIDED_POINT_NOT_CORRECT")
 		return
 	}
-
 	p := models.Order{
 		Distance: distance,
 		Status:   "UNASSIGN",
@@ -91,7 +99,16 @@ func (a *App) updateOrder(w http.ResponseWriter, r *http.Request) {
 		helpers.RespondWithError(w, http.StatusBadRequest, "INVALID_ORDER_ID")
 		return
 	}
-	status := r.FormValue("status")
+
+	decoder := json.NewDecoder(r.Body)
+	var trequest map[string]string
+	decerr := decoder.Decode(&trequest)
+	if decerr != nil {
+		helpers.RespondWithError(w, http.StatusBadRequest, "INVALID_BODY")
+		return
+	}
+
+	status := trequest["status"]
 	if status != "taken" {
 		helpers.RespondWithError(w, http.StatusBadRequest, "INVALID_STATUS")
 		return

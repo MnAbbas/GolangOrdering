@@ -2,12 +2,12 @@ package test
 
 import (
 	"GolangOrdering/controller"
+	"bytes"
 	"database/sql"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
 	"testing"
 
 	"github.com/gorilla/mux"
@@ -103,11 +103,9 @@ func TestGetOrders_4(t *testing.T) {
 //TestCreateOrder_1 is testing : invalid limit provided points for calculation distance for Endpoint : post /order
 func TestCreateOrder_1(t *testing.T) {
 
-	req, _ := http.NewRequest("POST", "/order", nil)
-	form := url.Values{}
-	form.Add("origin", `["m40.6905615","-73.9976592"]`)
-	form.Add("destination", `["40.6655101","-73.89188969999998"]`)
-	req.PostForm = form
+	var jsonStr = []byte(`{"origin":["m40.6655101","-73.89188969999998"],"destination":["40.6905615","-73.9976592"]}`)
+	req, _ := http.NewRequest("POST", "/order", bytes.NewBuffer(jsonStr))
+
 	response := executeRequest(req)
 	var m map[string]string
 	json.Unmarshal(response.Body.Bytes(), &m)
@@ -118,26 +116,27 @@ func TestCreateOrder_1(t *testing.T) {
 
 //TestCreateOrder_2 is testing : the correct answer for Endpoint : post /order
 func TestCreateOrder_2(t *testing.T) {
-	req, _ := http.NewRequest("POST", "/order", nil)
-	form := url.Values{}
-	form.Add("origin", `["40.6905615","-73.9976592"]`)
-	form.Add("destination", `["40.6655101","-73.89188969999998"]`)
-	req.PostForm = form
+	var jsonStr = []byte(`{"origin":["40.6655101","-73.89188969999998"],"destination":["40.6905615","-73.9976592"]}`)
+	req, _ := http.NewRequest("POST", "/order", bytes.NewBuffer(jsonStr))
+
 	response := executeRequest(req)
-	// t.Log(response.Body)
 	var m Order
 	json.Unmarshal(response.Body.Bytes(), &m)
 	equals(t, http.StatusOK, response.Code)
-	equals(t, m.Distance, 33)
+	equals(t, m.Distance, 34)
+
+	// req, _ := http.NewRequest("POST", "/order", nil)
+	// form := url.Values{}
+	// form.Add("origin", `["40.6905615","-73.9976592"]`)
+	// form.Add("destination", `["40.6655101","-73.89188969999998"]`)
+	// req.PostForm = form
 }
 
 //TestCreateOrder_3 is testing : the wrong orging point for Endpoint : post /order
 func TestCreateOrder_3(t *testing.T) {
-	req, _ := http.NewRequest("POST", "/order", nil)
-	form := url.Values{}
-	// form.Add("origin", `["40.6905615","-73.9976592"]`)
-	form.Add("destination", `["40.6655101","-73.89188969999998"]`)
-	req.PostForm = form
+	var jsonStr = []byte(`{"destination":["40.6905615","-73.9976592"]}`)
+	req, _ := http.NewRequest("POST", "/order", bytes.NewBuffer(jsonStr))
+
 	response := executeRequest(req)
 	var m map[string]string
 	json.Unmarshal(response.Body.Bytes(), &m)
@@ -147,11 +146,9 @@ func TestCreateOrder_3(t *testing.T) {
 
 //TestCreateOrder_5 is testing : the wrong destination point for Endpoint : post /order
 func TestCreateOrder_5(t *testing.T) {
-	req, _ := http.NewRequest("POST", "/order", nil)
-	form := url.Values{}
-	form.Add("origin", `["40.6905615","-73.9976592"]`)
-	// form.Add("destination", `40.6655101`)
-	req.PostForm = form
+	var jsonStr = []byte(`{"origin":["40.6905615","-73.9976592"]}`)
+	req, _ := http.NewRequest("POST", "/order", bytes.NewBuffer(jsonStr))
+
 	response := executeRequest(req)
 	var m map[string]string
 	json.Unmarshal(response.Body.Bytes(), &m)
@@ -161,11 +158,8 @@ func TestCreateOrder_5(t *testing.T) {
 
 //TestCreateOrder_6 is testing : the invalid orging or destination point for Endpoint : post /order
 func TestCreateOrder_6(t *testing.T) {
-	req, _ := http.NewRequest("POST", "/order", nil)
-	form := url.Values{}
-	form.Add("origin", `["40.6905615","-73.9976592"]`)
-	form.Add("destination", `40.6655101`)
-	req.PostForm = form
+	var jsonStr = []byte(`{"origin":["40.6655101"],"destination":["40.6905615","-73.9976592"]}`)
+	req, _ := http.NewRequest("POST", "/order", bytes.NewBuffer(jsonStr))
 	response := executeRequest(req)
 	var m map[string]string
 	json.Unmarshal(response.Body.Bytes(), &m)
@@ -179,10 +173,8 @@ func TestUpdateOrder_1(t *testing.T) {
 	//this id must not be used
 	orderid := 36
 	urlput := fmt.Sprintf("/order/%d", orderid)
-	req, _ := http.NewRequest("PUT", urlput, nil)
-	form := url.Values{}
-	form.Add("status", `taken`)
-	req.PostForm = form
+	var jsonStr = []byte(`{"status":"taken"}`)
+	req, _ := http.NewRequest("PUT", urlput, bytes.NewBuffer(jsonStr))
 	response := executeRequest(req)
 	// t.Log(response.Body)
 	var m map[string]string
@@ -194,10 +186,8 @@ func TestUpdateOrder_1(t *testing.T) {
 
 //TestUpdateOrder_2 is testing : check the response for orders which already have been taken for Endpoint : put /order/:id
 func TestUpdateOrder_2(t *testing.T) {
-	req, _ := http.NewRequest("PUT", "/order/1", nil)
-	form := url.Values{}
-	form.Add("status", `taken`)
-	req.PostForm = form
+	var jsonStr = []byte(`{"status":"taken"}`)
+	req, _ := http.NewRequest("PUT", "/order/1", bytes.NewBuffer(jsonStr))
 	response := executeRequest(req)
 	// t.Log(response.Body)
 	var m map[string]string
@@ -209,15 +199,13 @@ func TestUpdateOrder_2(t *testing.T) {
 
 //TestUpdateOrder_3 is testing : the invalid status value for status parameter for Endpoint : put /order/:id
 func TestUpdateOrder_3(t *testing.T) {
-	req, _ := http.NewRequest("PUT", "/order/34", nil)
-	form := url.Values{}
-	form.Add("status", `something`)
-	req.PostForm = form
+	var jsonStr = []byte(`{"status":"taken"}`)
+	req, _ := http.NewRequest("PUT", "/order/99000", bytes.NewBuffer(jsonStr))
 	response := executeRequest(req)
 	// t.Log(response.Body)
 	var m map[string]string
 	json.Unmarshal(response.Body.Bytes(), &m)
-	equals(t, m["error"], "INVALID_STATUS")
-	equals(t, http.StatusBadRequest, response.Code)
+	equals(t, m["error"], "ORDER_NOT_FOUND")
+	equals(t, http.StatusInternalServerError, response.Code)
 
 }

@@ -24,7 +24,7 @@ func (p *Order) UpdateOrder(db *sql.DB) (int, error) {
 	_ = db.QueryRow("select count(*) from orderinfo where iOrderid=?", p.ID).Scan(&cnt)
 
 	if cnt == 0 {
-		return 0, fmt.Errorf("orderid not founded")
+		return 0, fmt.Errorf("ORDER_NOT_FOUND")
 	}
 
 	stmt, err := db.Prepare("UPDATE orderinfo SET vStatus=? WHERE iOrderid=? and vStatus=?")
@@ -62,7 +62,6 @@ func (p *Order) CreateOrder(db *sql.DB) (int, error) {
 
 	id, _ := res.LastInsertId()
 
-	fmt.Printf("Inserted row: %d", id)
 	return int(id), nil
 
 }

@@ -18,12 +18,13 @@ func RespondWithError(w http.ResponseWriter, code int, message string) {
 //RespondWithJSON this is for creating response with format
 //payload could be anything that allowd to e marshal
 func RespondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(code)
+
 	if payload == nil {
 		payload = map[string]string{"status": "SUCCESS"}
 	}
 	response, _ := json.Marshal(payload)
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(code)
 	w.Write(response)
 }

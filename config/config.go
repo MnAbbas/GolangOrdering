@@ -43,7 +43,6 @@ func GetConfigInstance() Config {
 		pwd, _ := os.Getwd()
 
 		err := configor.Load(&instance, pwd+"/config/config.yaml")
-		log.Println(instance)
 		if err != nil {
 			log.Fatal("Error reading config structure: " + err.Error())
 		}
