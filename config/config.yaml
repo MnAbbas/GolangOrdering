@@ -1,0 +1,15 @@
+appname: testGolang
+
+server :
+    address : localhost:8080
+
+db:
+    address:     185.159.153.22
+    user:        joe
+    dbname :     orders
+    password:   U_Xz$M,(3${gpTcZ
+    port:       3306
+
+logpath: /tmp/log
+
+apikey: AIzaSyBzuM7atg360ClN4hmao7J3Y0UbvxSrkx8
