@@ -40,4 +40,4 @@ for setup and run project just need these files
 >based on your defination 
 - mysqlscript.sql -- this is mysql script
 
-@octocat :+1: its ready to go! :shipit:
+:+1: its ready to go! :shipit:
