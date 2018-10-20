@@ -41,7 +41,7 @@ it will print the result of tests
 # Run
 for setup and run project just need these files
 - bash.sh ---- this is for setup and run project
-- mydemoapp --- this is the binary for ubuntu 18 TLS(amd64), using GOOS=linux GOARCH=amd64 parameter to build the binary
+- mydemoapp --- this is the binary for `ubuntu 18 TLS(amd64)`, using `GOOS=linux GOARCH=amd64` parameter to build the binary
 >based on your defination 
 - mysqlscript.sql -- this is mysql script
 
