@@ -31,3 +31,9 @@ I create more than 20 test cases which will be tested automaticly
 just needed to go to root of project and call
 go test test/*.go
 it will print the result of tests
+
+# Run
+for setup and run project just need these files
+-bash.sh ---- this is for setup and run project
+-mydemoapp --- this is the binary for ubuntu with GOARCH=amd64
+-mysqlscript.sql -- this is mysql script
