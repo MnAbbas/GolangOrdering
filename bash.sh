@@ -7,7 +7,7 @@
 # current user privlage username if exists
 username="root"
 # default password if exists
-password="123456"
+password=""
 
 # Checking there is mysql or not
 mysqlpkg=$(dpkg -l | grep mysql | wc -l)

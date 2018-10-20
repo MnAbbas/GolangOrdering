@@ -1,5 +1,3 @@
-UPDATE mysql.user SET authentication_string = PASSWORD('123456') WHERE User ='root' ;
-FLUSH PRIVILEGES;
 CREATE DATABASE orders ;
 INSERT INTO mysql.user (User,Host,authentication_string,ssl_cipher,x509_issuer,x509_subject) VALUES('dumyuser','localhost',PASSWORD('dumypassword'),'','','') ;
 FLUSH PRIVILEGES;
