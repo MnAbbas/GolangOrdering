@@ -17,7 +17,7 @@ import (
 //CalcDistance is responsable for providing Distance betwwen two pont based on google map matrix
 func CalcDistance(src, dst string) (int, error) {
 	cnf := config.GetConfigInstance()
-	replacer := strings.NewReplacer("]", "", "[", "")
+	replacer := strings.NewReplacer("]", "", "[", "", `"`, "")
 
 	src = replacer.Replace(src)
 	dst = replacer.Replace(dst)

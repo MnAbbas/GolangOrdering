@@ -6,11 +6,11 @@
 package models
 
 import (
+	"GolangOrdering/logger"
 	"database/sql"
 	"fmt"
 	"sync"
 
-	"GolangOrdering/logger"
 	//mysql packages
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -20,7 +20,7 @@ var once sync.Once
 
 //GetDBInstance using singletone to return one instance of database
 func GetDBInstance(user, password, server, port, dbname string) (*sql.DB, error) {
-	haserror := true
+	haserror := false
 	once.Do(func() {
 		// Create connection string
 		connString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8", user, password, server, port, dbname)

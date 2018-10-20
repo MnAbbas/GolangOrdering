@@ -54,7 +54,7 @@ func (a *App) initializeRoutes() {
 
 //notFound to customize not found message in gorilla
 func notFound(w http.ResponseWriter, r *http.Request) {
-	helpers.RespondWithError(w, http.StatusNotFound, "Page Not Found")
+	helpers.RespondWithError(w, http.StatusNotFound, "ROUTE_NOT_FOUND")
 }
 
 //checkSecurity is for security check

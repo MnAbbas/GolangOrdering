@@ -28,9 +28,9 @@ type Config struct {
 		Port     string `default:"3306"`
 	}
 
-	LOGPATH string
+	LOGPATH string `default:"/tmp/log"`
 
-	APIKEY string
+	APIKEY string `default:"AIzaSyBzuM7atg360ClN4hmao7J3Y0UbvxSrkx8"`
 }
 
 var instance Config

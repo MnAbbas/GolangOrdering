@@ -19,6 +19,14 @@ type Order struct {
 
 //UpdateOrder is allow to update the status of orderids
 func (p *Order) UpdateOrder(db *sql.DB) (int, error) {
+
+	var cnt int
+	_ = db.QueryRow("select count(*) from orderinfo where iOrderid=?", p.ID).Scan(&cnt)
+
+	if cnt == 0 {
+		return 0, fmt.Errorf("orderid not founded")
+	}
+
 	stmt, err := db.Prepare("UPDATE orderinfo SET vStatus=? WHERE iOrderid=? and vStatus=?")
 	if err != nil {
 		log.Fatal("Cannot run insert statement", err)

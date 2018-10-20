@@ -19,13 +19,13 @@ import (
 func (a *App) getOrders(w http.ResponseWriter, r *http.Request) {
 	page, err := strconv.Atoi(r.URL.Query().Get("page"))
 	if err != nil {
-		helpers.RespondWithError(w, http.StatusBadRequest, "Invalid page number")
+		helpers.RespondWithError(w, http.StatusBadRequest, "INVALID_PAGE_NUMBER")
 		return
 	}
 
 	limit, err := strconv.Atoi(r.URL.Query().Get("limit"))
 	if err != nil {
-		helpers.RespondWithError(w, http.StatusBadRequest, "Invalid limit number")
+		helpers.RespondWithError(w, http.StatusBadRequest, "INVALID_LIMIT_NUMBER")
 		return
 	}
 
@@ -46,13 +46,13 @@ func (a *App) getOrders(w http.ResponseWriter, r *http.Request) {
 func (a *App) createOrder(w http.ResponseWriter, r *http.Request) {
 	origin := r.FormValue("origin")
 	if len(origin) == 0 {
-		helpers.RespondWithError(w, http.StatusInternalServerError, "origin")
+		helpers.RespondWithError(w, http.StatusBadRequest, "INVALID_ORIGIN")
 		return
 	}
 
 	destination := r.FormValue("destination")
 	if len(destination) == 0 {
-		helpers.RespondWithError(w, http.StatusInternalServerError, "Invalid destination")
+		helpers.RespondWithError(w, http.StatusBadRequest, "INVALID_DESTINATION")
 		return
 	}
 
@@ -62,7 +62,7 @@ func (a *App) createOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if distance == 0 {
-		helpers.RespondWithError(w, http.StatusInternalServerError, "provided orgin and distinaction are not correct")
+		helpers.RespondWithError(w, http.StatusBadRequest, "PROVIDED_POINT_NOT_CORRECT")
 		return
 	}
 
@@ -78,7 +78,7 @@ func (a *App) createOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	p.ID = orderid
-	helpers.RespondWithJSON(w, http.StatusCreated, p)
+	helpers.RespondWithJSON(w, http.StatusOK, p)
 }
 
 //updateOrder is responsable to change the status of order
@@ -88,12 +88,12 @@ func (a *App) updateOrder(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
-		helpers.RespondWithError(w, http.StatusBadRequest, "Invalid Order ID")
+		helpers.RespondWithError(w, http.StatusBadRequest, "INVALID_ORDER_ID")
 		return
 	}
 	status := r.FormValue("status")
 	if status != "taken" {
-		helpers.RespondWithError(w, http.StatusBadRequest, "value of status is not correct")
+		helpers.RespondWithError(w, http.StatusBadRequest, "INVALID_STATUS")
 		return
 	}
 
