@@ -1,21 +1,16 @@
 #!/bin/bash
 ####################################
 #
-# Backup to NFS mount script.
+# This is a bash file to start my demo application.
 #
 ####################################
-# default username if exists
+# current user privlage username if exists
 username="root"
 # default password if exists
 password="123456"
-# crete dumy user for demo
-dumyuser="dumyuser"
-# crete dumy password for demo
-dumypassword="dumypassword"
 
 # Checking there is mysql or not
-mysqlpkg=$(dpkg-query -W mysql | wc  -l)
-
+mysqlpkg=$(dpkg -l | grep mysql | wc -l)
 
 install_mysql () {
     echo "Install of Mysql just begun"
@@ -51,7 +46,7 @@ run_script () {
 
     # Set the root password
     execsql="UPDATE mysql.user SET authentication_string = PASSWORD('123456') WHERE User ='root'" 
-    mysql -u root -p'123456' -s < mysqlscript.sql
+    mysql -u $username -p$password -s < mysqlscript.sql
     echo "User root Updated!"
     date
     echo
