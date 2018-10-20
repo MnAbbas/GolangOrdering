@@ -9,7 +9,8 @@ this project is built based on mvc models
 I using [Golang](https://golang.org)  , [gorilla](http://www.gorillatoolkit.org) , [mysql](https://www.mysql.com) in this project
 
 # Settup
-``` ./bash.sh ``` will install mysql if needed otherwise it will create use , database and one table
+``` ./bash.sh ``` 
+will install mysql if needed otherwise it will create use , database and one table
 default user is :=dumyuser
 default pass is :=dumypassword
 
