@@ -11,9 +11,10 @@ I used [Golang](https://golang.org)  , [gorilla](http://www.gorillatoolkit.org) 
 # Settup
 ``` ./bash.sh ``` 
 will install mysql if needed otherwise it will create use , database and one table
+```
 default user is :=dumyuser
 default pass is :=dumypassword
-
+```
 # Existinig mysql
 if an istance of mysql is exist , please in bash.sh provide one user & password 
 to execute the sql scripts
