@@ -7,7 +7,6 @@ package helpers
 import (
 	"GolangOrdering/config"
 	"GolangOrdering/logger"
-	"fmt"
 
 	"strings"
 
@@ -41,6 +40,5 @@ func CalcDistance(src, dst string) (int, error) {
 	if err != nil {
 		logger.Log.Fatalf("fatal error: %s", err)
 	}
-	fmt.Println(route.Rows[0].Elements[0].Duration.Minutes())
 	return int(route.Rows[0].Elements[0].Duration.Minutes()), nil
 }
