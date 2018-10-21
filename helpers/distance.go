@@ -22,7 +22,7 @@ func CalcDistance(src, dst string) (int, error) {
 	src = replacer.Replace(src)
 	dst = replacer.Replace(dst)
 
-	logger.Log.Printf("origin: %v and dist : %v", src, dst)
+	// logger.Log.Printf("origin: %v and dist : %v", src, dst)
 
 	c, err := maps.NewClient(maps.WithAPIKey(cnf.APIKEY))
 	if err != nil {

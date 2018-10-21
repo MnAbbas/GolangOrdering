@@ -49,7 +49,7 @@ chmod +x bash.sh
 I create more than 20 test cases which will be tested automaticly
 just needed to go to root of project and call
 ``` golang
-go test test/*.go 
+go test -v test/*.go 
 ```
 it will print the result of tests
 

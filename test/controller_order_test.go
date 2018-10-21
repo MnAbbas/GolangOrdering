@@ -171,7 +171,7 @@ func TestCreateOrder_6(t *testing.T) {
 // this method must be called just once the next time will not pass the error
 func TestUpdateOrder_1(t *testing.T) {
 	//this id must not be used
-	orderid := 36
+	orderid := 51
 	urlput := fmt.Sprintf("/order/%d", orderid)
 	var jsonStr = []byte(`{"status":"taken"}`)
 	req, _ := http.NewRequest("PUT", urlput, bytes.NewBuffer(jsonStr))
@@ -181,6 +181,7 @@ func TestUpdateOrder_1(t *testing.T) {
 	json.Unmarshal(response.Body.Bytes(), &m)
 	equals(t, m["status"], "SUCCESS")
 	equals(t, http.StatusOK, response.Code)
+	// fmt.Println("yes", t.)
 
 }
 
@@ -194,7 +195,6 @@ func TestUpdateOrder_2(t *testing.T) {
 	json.Unmarshal(response.Body.Bytes(), &m)
 	equals(t, m["error"], "ORDER_ALREADY_BEEN_TAKEN")
 	equals(t, http.StatusConflict, response.Code)
-
 }
 
 //TestUpdateOrder_3 is testing : the invalid status value for status parameter for Endpoint : put /order/:id
@@ -207,5 +207,4 @@ func TestUpdateOrder_3(t *testing.T) {
 	json.Unmarshal(response.Body.Bytes(), &m)
 	equals(t, m["error"], "ORDER_NOT_FOUND")
 	equals(t, http.StatusInternalServerError, response.Code)
-
 }

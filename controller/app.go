@@ -10,7 +10,6 @@ import (
 	"GolangOrdering/models"
 
 	"database/sql"
-	"log"
 	"net/http"
 
 	//mysql package imported
@@ -40,7 +39,7 @@ func (a *App) Initialize(user, password, server, port, dbname string) {
 
 //Run is responsable to run application based on provided addres and router
 func (a *App) Run(addr string) {
-	log.Fatal(http.ListenAndServe(addr, a.Router))
+	logger.Log.Fatal(http.ListenAndServe(addr, a.Router))
 }
 
 //initializeRoutes is defining routers
