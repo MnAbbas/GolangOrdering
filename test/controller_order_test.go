@@ -200,11 +200,11 @@ func TestUpdateOrder_2(t *testing.T) {
 //TestUpdateOrder_3 is testing : the invalid status value for status parameter for Endpoint : put /order/:id
 func TestUpdateOrder_3(t *testing.T) {
 	var jsonStr = []byte(`{"status":"taken"}`)
-	req, _ := http.NewRequest("PUT", "/order/99000", bytes.NewBuffer(jsonStr))
+	req, _ := http.NewRequest("PUT", "/order/1111111111111", bytes.NewBuffer(jsonStr))
 	response := executeRequest(req)
 	// t.Log(response.Body)
 	var m map[string]string
 	json.Unmarshal(response.Body.Bytes(), &m)
 	equals(t, m["error"], "ORDER_NOT_FOUND")
-	equals(t, http.StatusInternalServerError, response.Code)
+	equals(t, http.StatusConflict, response.Code)
 }

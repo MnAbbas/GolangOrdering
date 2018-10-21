@@ -19,15 +19,14 @@ type Order struct {
 //UpdateOrder is allow to update the status of orderids
 func (p *Order) UpdateOrder(db *sql.DB) (int, error) {
 
-	var cnt int
-	err := db.QueryRow("select  iOrderid from orderinfo where iOrderid=?", p.ID).Scan(&cnt)
+	cnt := -1
+	err := db.QueryRow("select  count(iOrderid) from orderinfo where iOrderid=?", p.ID).Scan(&cnt)
+	if cnt == 0 {
+		return -1, nil
+	}
 
 	if err != nil {
 		return 0, err
-	}
-
-	if cnt == 0 {
-		return -1, nil
 	}
 
 	stmt, err := db.Prepare("UPDATE orderinfo SET vStatus=? WHERE iOrderid=? and vStatus=?")
