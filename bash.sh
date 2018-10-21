@@ -97,6 +97,7 @@ runapplication (){
     date
     echo
     ./mydemoapp&
+    exit 0 
 }
 
 # Check the status of installation mysql on Server
