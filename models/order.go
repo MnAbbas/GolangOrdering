@@ -23,7 +23,7 @@ func (p *Order) UpdateOrder(db *sql.DB) (int, error) {
 	_ = db.QueryRow("select  iOrderid from orderinfo where iOrderid=?", p.ID).Scan(&cnt)
 
 	if cnt == 0 {
-		return 0, nil
+		return -1, nil
 	}
 
 	stmt, err := db.Prepare("UPDATE orderinfo SET vStatus=? WHERE iOrderid=? and vStatus=?")
