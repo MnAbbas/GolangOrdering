@@ -39,6 +39,10 @@ but in case of changing anyof them
 you must have a folder named config
 with a config.yaml in it according to source 
 you could be able to change it accordingly
+>permishn on bash.sh is important you must grant execution access to bash.sh
+```bash
+chmod +x bash.sh
+```
 
 # Test
 I create more than 20 test cases which will be tested automaticly
