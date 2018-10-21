@@ -20,7 +20,11 @@ type Order struct {
 func (p *Order) UpdateOrder(db *sql.DB) (int, error) {
 
 	var cnt int
-	_ = db.QueryRow("select  iOrderid from orderinfo where iOrderid=?", p.ID).Scan(&cnt)
+	err := db.QueryRow("select  iOrderid from orderinfo where iOrderid=?", p.ID).Scan(&cnt)
+
+	if err != nil {
+		return 0, err
+	}
 
 	if cnt == 0 {
 		return -1, nil

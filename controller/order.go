@@ -33,7 +33,7 @@ func (a *App) getOrders(w http.ResponseWriter, r *http.Request) {
 
 	Orders, err := models.GetOrders(a.DB, (page - 1), limit)
 	if err != nil {
-		helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
+		helpers.RespondWithError(w, http.StatusInternalServerError, "DB_CONNECTION_ERR")
 		return
 	}
 	if len(Orders) == 0 {

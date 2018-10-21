@@ -30,7 +30,7 @@ func GetDBInstance(user, password, server, port, dbname string) (*sql.DB, error)
 		instance, err = sql.Open("mysql", connString)
 		if err != nil {
 			haserror = true
-			logger.Log.Fatal("Error creating connection pool: " + err.Error())
+			logger.Log.Printf("Error creating connection pool: %v " + err.Error())
 		}
 		haserror = false
 
