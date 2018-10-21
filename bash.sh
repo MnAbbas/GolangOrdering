@@ -7,8 +7,17 @@
 # current user privlage username if exists
 username="root"
 # default password if exists
-password=""
+password="123456"
 
+sqlscript=`CREATE DATABASE orders ;
+INSERT INTO mysql.user (User,Host,authentication_string,ssl_cipher,x509_issuer,x509_subject) VALUES('dumyuser','localhost',PASSWORD('dumypassword'),'','','') ;
+FLUSH PRIVILEGES;
+GRANT ALL PRIVILEGES ON orders.* to 'dumyuser'@localhost;
+FLUSH PRIVILEGES;
+use orders ; CREATE TABLE orderinfo (iOrderId int(11) NOT NULL AUTO_INCREMENT,iDistance int(11) DEFAULT NULL, vStatus varchar(45) , dtOrder datetime DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (iOrderId)) ENGINE=InnoDB AUTO_INCREMENT=0;`
+
+# Creating file ---> _tempfilescript.sql<-------------------
+echo sqlscript > _tempfilescript.sql
 # Checking there is mysql or not
 mysqlpkg=$(dpkg -l | grep mysql | wc -l)
 
@@ -53,7 +62,7 @@ run_script () {
 }
 
 runapplication (){
-    echo "Esecute the application , go everythere with Golang "
+    echo "Esecute the application , ready to go "
     date
     echo
     ./mydemoapp
@@ -67,4 +76,5 @@ if [ $mysqlpkg -eq 0 ] ; then
 else
     run_script
 fi
+rm _tempfilescript.sql
 runapplication
