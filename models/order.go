@@ -67,10 +67,10 @@ func (p *Order) CreateOrder(db *sql.DB) (int, error) {
 }
 
 //GetOrders is responsable to retrieve all orders based on offest provided by user
-func GetOrders(db *sql.DB, fromrec, torec int) ([]Order, error) {
+func GetOrders(db *sql.DB, page, limit int) ([]Order, error) {
 	rows, err := db.Query(
 		"SELECT iOrderid , vStatus , iDistance  FROM orderinfo LIMIT ? , ?",
-		fromrec, torec)
+		page, limit)
 
 	if err != nil {
 		return nil, err

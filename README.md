@@ -5,7 +5,7 @@ I did my best to keep it simple , clean and structured
 
 this project is built based on mvc models 
 
-# Technology
+# Technology & Packages
 I used [Golang](https://golang.org)  , [gorilla](http://www.gorillatoolkit.org) , [mysql](https://www.mysql.com) in this project
 
 # Settup
@@ -18,9 +18,10 @@ default user is :=dumyuser
 default pass is :=dumypassword
 ```
 # Existinig mysql
-if an istance of mysql is exist , please in bash.sh provide one user & password 
+if an istance of mysql is exist , please in bash.sh provide one use data in bash.sh top of the file 
+` username='YOUR_MYSQL_USERNAME' & password='YOUR_MYSQL_USERNAME'  `
 to execute the sql scripts
-otherwise it will handeled by the bash file
+### otherwise it will handeled by the bash file
 
 # Google API Key
 this project need a Google API key which has permition to call matrix api
@@ -52,10 +53,18 @@ go test test/*.go
 ```
 it will print the result of tests
 
+# Build
+the binary for `ubuntu 18 TLS(amd64)`, using `GOOS=linux GOARCH=amd64` 
+### build command:
+``` golang 
+GOOS=linux GOARCH=amd64 go build -o mydemoapp
+```
+parameter to build the binary
+>based on your defination 
+
 # Run
 for setup and run project just need these files
 - bash.sh ---- this is for setup and run project
-- mydemoapp --- this is the binary for `ubuntu 18 TLS(amd64)`, using `GOOS=linux GOARCH=amd64` parameter to build the binary
->based on your defination 
+- mydemoapp --- execatable application
 
 :+1: its ready to go! :shipit:

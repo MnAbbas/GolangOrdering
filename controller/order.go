@@ -31,7 +31,7 @@ func (a *App) getOrders(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	Orders, err := models.GetOrders(a.DB, (page-1)*limit, page*limit)
+	Orders, err := models.GetOrders(a.DB, (page - 1), limit)
 	if err != nil {
 		helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 		return
