@@ -29,7 +29,7 @@ func (a *App) Initialize(user, password, server, port, dbname string) {
 	var err error
 	a.DB, err = models.GetDBInstance(user, password, server, port, dbname)
 	if err != nil {
-		logger.Log.Fatal(err)
+		logger.Log.Println(err)
 	}
 	logger.Log.Println("DB is started to act")
 

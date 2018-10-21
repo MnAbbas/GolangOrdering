@@ -5,9 +5,9 @@
 package models
 
 import (
+	"GolangOrdering/logger"
 	"database/sql"
 	"fmt"
-	"log"
 )
 
 //Order is represent the structure of order in database
@@ -29,19 +29,19 @@ func (p *Order) UpdateOrder(db *sql.DB) (int, error) {
 
 	stmt, err := db.Prepare("UPDATE orderinfo SET vStatus=? WHERE iOrderid=? and vStatus=?")
 	if err != nil {
-		log.Fatal("Cannot run insert statement", err)
+		logger.Log.Println("Cannot run insert statement", err)
 		return 0, err
 	}
 
 	res, err := stmt.Exec(p.Status, p.ID, "UNASSIGN")
 	if err != nil {
-		log.Fatal("Cannot run insert statement", err)
+		logger.Log.Println("Cannot run insert statement", err)
 		return 0, err
 	}
 
 	affect, err := res.RowsAffected()
 	if err != nil {
-		log.Fatal("Cannot run insert statement", err)
+		logger.Log.Println("Cannot run insert statement", err)
 		return 0, err
 	}
 
@@ -52,12 +52,14 @@ func (p *Order) UpdateOrder(db *sql.DB) (int, error) {
 func (p *Order) CreateOrder(db *sql.DB) (int, error) {
 	stmt, err := db.Prepare("INSERT INTO orderinfo(vStatus, iDistance) VALUES(?, ?)")
 	if err != nil {
-		log.Fatal("Cannot prepare DB statement", err)
+		logger.Log.Println("Cannot prepare DB statement", err)
+		return 0, err
 	}
 
 	res, err := stmt.Exec(p.Status, p.Distance)
 	if err != nil {
-		log.Fatal("Cannot run insert statement", err)
+		logger.Log.Println("Cannot run insert statement", err)
+		return 0, err
 	}
 
 	id, _ := res.LastInsertId()

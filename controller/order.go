@@ -82,7 +82,7 @@ func (a *App) createOrder(w http.ResponseWriter, r *http.Request) {
 	orderid, err := p.CreateOrder(a.DB)
 
 	if err != nil {
-		helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
+		helpers.RespondWithError(w, http.StatusInternalServerError, "DB_CONNECTION_ERR")
 		return
 	}
 	p.ID = orderid
@@ -120,7 +120,7 @@ func (a *App) updateOrder(w http.ResponseWriter, r *http.Request) {
 	}
 	effected, err := p.UpdateOrder(a.DB)
 	if err != nil {
-		helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
+		helpers.RespondWithError(w, http.StatusInternalServerError, "DB_CONNECTION_ERR")
 		return
 	}
 	if effected == 0 {
