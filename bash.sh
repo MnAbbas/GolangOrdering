@@ -93,10 +93,10 @@ run_script () {
 }
 
 runapplication (){
-    printf "${RED}Esecute the application , ready to go${NC}\n"
+    ./mydemoapp&
+    printf "${RED} application is running , ready to go${NC}\n"
     date
     echo
-    nohup ./mydemoapp&
     exit 0 
 }
 
