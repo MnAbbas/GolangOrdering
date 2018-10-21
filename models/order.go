@@ -7,7 +7,6 @@ package models
 import (
 	"GolangOrdering/logger"
 	"database/sql"
-	"fmt"
 )
 
 //Order is represent the structure of order in database
@@ -21,27 +20,27 @@ type Order struct {
 func (p *Order) UpdateOrder(db *sql.DB) (int, error) {
 
 	var cnt int
-	_ = db.QueryRow("select count(*) from orderinfo where iOrderid=?", p.ID).Scan(&cnt)
+	_ = db.QueryRow("select  iOrderid from orderinfo where iOrderid=?", p.ID).Scan(&cnt)
 
 	if cnt == 0 {
-		return 0, fmt.Errorf("ORDER_NOT_FOUND")
+		return 0, nil
 	}
 
 	stmt, err := db.Prepare("UPDATE orderinfo SET vStatus=? WHERE iOrderid=? and vStatus=?")
 	if err != nil {
-		logger.Log.Println("Cannot run insert statement", err)
+		logger.Log.Println("Cannot run update statement", err)
 		return 0, err
 	}
 
 	res, err := stmt.Exec(p.Status, p.ID, "UNASSIGN")
 	if err != nil {
-		logger.Log.Println("Cannot run insert statement", err)
+		logger.Log.Println("Cannot run update statement", err)
 		return 0, err
 	}
 
 	affect, err := res.RowsAffected()
 	if err != nil {
-		logger.Log.Println("Cannot run insert statement", err)
+		logger.Log.Println("Cannot run update statement", err)
 		return 0, err
 	}
 

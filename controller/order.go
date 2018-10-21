@@ -131,5 +131,10 @@ func (a *App) updateOrder(w http.ResponseWriter, r *http.Request) {
 		helpers.RespondWithError(w, http.StatusConflict, "ORDER_ALREADY_BEEN_TAKEN")
 		return
 	}
+	if effected == -1 {
+		helpers.RespondWithError(w, http.StatusConflict, "ORDER_NOT_FOUND")
+		return
+	}
+
 	helpers.RespondWithJSON(w, http.StatusOK, nil)
 }
