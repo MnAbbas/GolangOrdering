@@ -36,6 +36,10 @@ func (a *App) getOrders(w http.ResponseWriter, r *http.Request) {
 		helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
+	if len(Orders) == 0 {
+		helpers.RespondWithError(w, http.StatusInternalServerError, "DATA_NOT_FOUND")
+		return
+	}
 	helpers.RespondWithJSON(w, http.StatusOK, Orders)
 }
 
