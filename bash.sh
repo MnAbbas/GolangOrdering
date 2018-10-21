@@ -9,15 +9,47 @@ username="root"
 # default password if exists
 password="123456"
 
-sqlscript=`CREATE DATABASE orders ;
-INSERT INTO mysql.user (User,Host,authentication_string,ssl_cipher,x509_issuer,x509_subject) VALUES('dumyuser','localhost',PASSWORD('dumypassword'),'','','') ;
-FLUSH PRIVILEGES;
-GRANT ALL PRIVILEGES ON orders.* to 'dumyuser'@localhost;
-FLUSH PRIVILEGES;
-use orders ; CREATE TABLE orderinfo (iOrderId int(11) NOT NULL AUTO_INCREMENT,iDistance int(11) DEFAULT NULL, vStatus varchar(45) , dtOrder datetime DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (iOrderId)) ENGINE=InnoDB AUTO_INCREMENT=0;`
+# for dumyuser test there is default
+dumyuser="dumyuser"
+# for dumyuser test there is default
+dumypass="dumypassword"
+# this is for apikey configuration
+apikey="AIzaSyBzuM7atg360ClN4hmao7J3Y0UbvxSrkx8"
 
-# Creating file ---> _tempfilescript.sql<-------------------
-echo sqlscript > _tempfilescript.sql
+qtation="'"
+RED='\033[0;31m' # Red Color
+NC='\033[0m' # No Color
+BLUE='\033[0;34m' # Blue Color
+# make a directory name config
+mkdir config
+
+# creating config file and its default contents
+
+echo "appname: testGolang
+
+server :
+    address : :8080
+
+db:
+    address:     localhost
+    user:        ${dumyuser}
+    dbname :     orders
+    password:   ${dumypass}
+    port:       3306
+
+logpath: /tmp/log
+
+apikey: ${apikey}
+"   > config/config.yaml
+
+
+echo "CREATE DATABASE orders ;
+INSERT INTO mysql.user (User,Host,authentication_string,ssl_cipher,x509_issuer,x509_subject) VALUES(${qtation}${dumyuser}${qtation},'localhost',PASSWORD(${qtation}${dumypass}${qtation}),'','','') ;
+FLUSH PRIVILEGES;
+GRANT ALL PRIVILEGES ON orders.* to ${qtation}${dumyuser}${qtation}@localhost;
+FLUSH PRIVILEGES;
+use orders ; CREATE TABLE orderinfo (iOrderId int(11) NOT NULL AUTO_INCREMENT,iDistance int(11) DEFAULT NULL, vStatus varchar(45) , dtOrder datetime DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (iOrderId)) ENGINE=InnoDB AUTO_INCREMENT=0;" > _tempfilescript.sql
+
 # Checking there is mysql or not
 mysqlpkg=$(dpkg -l | grep mysql | wc -l)
 
@@ -41,7 +73,7 @@ install_mysql () {
     # To ensure that the database server launches after a reboot, run the following command:
     systemctl enable mysql
     # This is running the script and create the schema
-    echo "Install of Mysql just finished"
+    printf "${RED}Install of Mysql just finished${NC}\n"
     date
     echo
 
@@ -54,18 +86,17 @@ run_script () {
     echo
 
     # Set the root password
-    execsql="UPDATE mysql.user SET authentication_string = PASSWORD('123456') WHERE User ='root'" 
-    mysql -u $username -p$password -s < mysqlscript.sql
-    echo "User root Updated!"
+    mysql -u $username -p$password -s < _tempfilescript.sql
+    printf "${BLUE}Database Updateded${NC}\n!"
     date
     echo
 }
 
 runapplication (){
-    echo "Esecute the application , ready to go "
+    printf "${RED}Esecute the application , ready to go${NC}\n"
     date
     echo
-    ./mydemoapp
+    ./mydemoapp&
 }
 
 # Check the status of installation mysql on Server

@@ -33,6 +33,7 @@ under default.json or production.json change
 ```javascript
 apikey: YOUR_API_KEY
 ```
+or you could change the value of this is bash.sh file
 # Pre-requirment
 this project has its default value such as 
 `dbuser` `information` , `logfile path` , `server address` `listner`  `google api key`

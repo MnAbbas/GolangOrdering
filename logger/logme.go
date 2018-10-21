@@ -34,7 +34,7 @@ func init() {
 		panic(err1)
 	}
 	Log = log.New(file, "", log.LstdFlags|log.Lshortfile)
-	mw := io.MultiWriter(file)
+	mw := io.MultiWriter(os.Stdout, file)
 	Log.SetOutput(mw)
 	Log.Println("LogFile1 : " + filepath)
 }

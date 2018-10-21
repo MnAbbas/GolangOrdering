@@ -1,14 +1,14 @@
 appname: testGolang
 
 server :
-    address : localhost:8080
+    address : :8080
 
 db:
-    address:     localhost
-    user:        dumyuser
-    dbname :     orders
-    password:   dumypassword
-    port:       3306
+    address: localhost
+    user: dumyuser
+    dbname : orders
+    password: dumypassword
+    port: 3306
 
 logpath: /tmp/log
 
