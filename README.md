@@ -22,9 +22,19 @@ if an istance of mysql is exist , please in bash.sh provide one user & password
 to execute the sql scripts
 otherwise it will handeled by the bash file
 
+# Google API Key
+this project need a Google API key which has permition to call matrix api
+for putting your own Google API Key you shoud go to config folder
+```bash
+ vim config/config.yaml
+ ```
+under default.json or production.json change 
+```javascript
+apikey: YOUR_API_KEY
+```
 # Pre-requirment
 this project has its default value such as 
-`dbuser` `information` , `logfile path` , `server address` `listner` 
+`dbuser` `information` , `logfile path` , `server address` `listner`  `google api key`
 but in case of changing anyof them 
 you must have a folder named config
 with a config.yaml in it according to source 
@@ -43,6 +53,5 @@ for setup and run project just need these files
 - bash.sh ---- this is for setup and run project
 - mydemoapp --- this is the binary for `ubuntu 18 TLS(amd64)`, using `GOOS=linux GOARCH=amd64` parameter to build the binary
 >based on your defination 
-- mysqlscript.sql -- this is mysql script
 
 :+1: its ready to go! :shipit:
