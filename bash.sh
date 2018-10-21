@@ -96,7 +96,7 @@ runapplication (){
     printf "${RED}Esecute the application , ready to go${NC}\n"
     date
     echo
-    ./mydemoapp&
+    nohup ./mydemoapp&
     exit 0 
 }
 
