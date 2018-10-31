@@ -68,7 +68,11 @@ func (a *App) createOrder(w http.ResponseWriter, r *http.Request) {
 		helpers.RespondWithError(w, http.StatusBadRequest, "INVALID_DESTINATION")
 		return
 	}
-	distance, err := helpers.CalcDistance(strings.Join(origin, ","), strings.Join(destination, ","))
+	dist := helpers.Distance{
+		Src: strings.Join(origin, ","),
+		Dst: strings.Join(destination, ","),
+	}
+	distance, err := dist.CalcDistance()
 	if err != nil {
 		helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
 		return
